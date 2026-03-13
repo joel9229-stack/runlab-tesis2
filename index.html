@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>RUNLAB</title>
+<style>
+  body { background:#0a0a0a; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; }
+  .logo { font-family:Georgia,serif; font-size:32px; color:#f5f5f0; letter-spacing:8px; }
+  .logo span { color:#e8451e; }
+</style>
+</head>
+<body>
+<div class="logo">RUN<span>LAB</span></div>
+<script>
+  // ============================================================
+  // ASIGNACIÓN ALEATORIA A/B — 50% control / 50% experimental
+  // Usa sessionStorage: cada nueva sesión del navegador recibe
+  // una asignación fresca. Si el participante recarga dentro de
+  // la misma sesión, mantiene la misma condición.
+  // ============================================================
+  const stored = sessionStorage.getItem('rl_condition');
+  let condition;
+  if (stored) {
+    condition = stored;           // Misma sesión → misma condición
+  } else {
+    condition = Math.random() < 0.5 ? 'control' : 'experimental';
+    sessionStorage.setItem('rl_condition', condition);
+  }
+  window.location.replace(
+    condition === 'experimental'
+      ? 'index-experimental.html'
+      : 'index-control.html'
+  );
+</script>
+</body>
+</html>
